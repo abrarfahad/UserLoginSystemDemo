@@ -10,11 +10,12 @@ using System.Windows.Forms;
 
 namespace UserLoginSystem
 {
-    public partial class Form1 : Form
+    public partial class TeacherDetails : Form
     {
-        public Form1()
+        public TeacherDetails(User user)
         {
             InitializeComponent();
+            this.Text = $"Welcome {user.UserName} and You are a {(UserTypeEnum)user.UserType}";
         }
     }
 }
