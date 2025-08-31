@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.28307.1000
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserLoginSystem", "UserLoginSystem\UserLoginSystem.csproj", "{CE7F016D-C3D5-4643-B0CD-561509261832}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{16FDBF20-1730-491C-B203-67C9E3923CA8}"
+	ProjectSection(SolutionItems) = preProject
+		UserTableQuery.sql = UserTableQuery.sql
+	EndProjectSection
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
