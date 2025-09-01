@@ -33,6 +33,23 @@ namespace UserLoginSystem
             Users.Add(teacher);
             Users.Add(student);
         }
+        public DataTable getAllUsers()
+        {
+            var sql = $"Select Id,UserName,ContactNumber as Contact,Address from Users ";
+            var datatable = dataAccess.Execute(sql);
+            return datatable;
+        }
+        public bool UpdateUser(User user)
+        {
+            var updateSql = $"update Users set UserName='{user.UserName}'," +
+                $"ContactNumber='{user.ContactNumber}'," +
+                $"Address='{user.Address}' where Id='{user.Id}'";
+            if (dataAccess.ExecuteNonQuery(updateSql) > 0)
+            {
+                return true;
+            }
+            return false;
+        }
         public bool IsUserValidForLogin(string userame,string password)
         {
             DataTable dataTable;

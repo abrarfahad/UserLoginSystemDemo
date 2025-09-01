@@ -39,6 +39,9 @@ namespace UserLoginSystem
             }
 
             MessageBox.Show($"Welcome {txtUserNmae.Text}");
+            this.Hide();
+            UsersFrom usersFrom = new UsersFrom();
+            usersFrom.Show();
             //if(user.UserType== (int)UserTypeEnum.Teacher)
             //{
             //    TeacherDetails teacherDetailsForm = new TeacherDetails(user);
