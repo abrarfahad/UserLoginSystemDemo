@@ -11,10 +11,10 @@ namespace UserLoginSystem
     public class UserRepo
     {
         List<User> Users;
-        DataAccess dataAccess;
+        MySqlDataAccess dataAccess;
         public UserRepo()
         {
-            dataAccess = new DataAccess();
+            dataAccess = new MySqlDataAccess();
             Users = new List<User>();
             PopulateUsers();
         }
@@ -42,36 +42,40 @@ namespace UserLoginSystem
         }
         public bool UpdateUser(User user)
         {
-            string cs = @"Server=DESKTOP-JM75471\SQLEXPRESS;Database=ScoolManagementSystemDb;Trusted_Connection=True;";
+            //string cs = @"Server=DESKTOP-JM75471\SQLEXPRESS;Database=ScoolManagementSystemDb;Trusted_Connection=True;";
 
-            string sql = @"UPDATE [ScoolManagementSystemDb].[dbo].[Users]
-                   SET UserName = @un,
-                       ContactNumber = @cn,
-                       Address = @adr
-                   WHERE Id = @Id";
+            //string sql = @"UPDATE [ScoolManagementSystemDb].[dbo].[Users]
+            //       SET UserName = @un,
+            //           ContactNumber = @cn,
+            //           Address = @adr
+            //       WHERE Id = @Id";
 
-            using (SqlConnection conn = new SqlConnection(cs))
-            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            //using (SqlConnection conn = new SqlConnection(cs))
+            //using (SqlCommand cmd = new SqlCommand(sql, conn))
+            //{
+            //    cmd.CommandType = CommandType.Text;
+
+            //    cmd.Parameters.Add("@un", SqlDbType.NVarChar, 50).Value = user.UserName;
+            //    cmd.Parameters.Add("@cn", SqlDbType.NVarChar, 16).Value = user.ContactNumber;
+            //    cmd.Parameters.Add("@adr", SqlDbType.NVarChar, 255).Value = user.Address;
+            //    cmd.Parameters.Add("@Id", SqlDbType.Int).Value = user.Id;
+
+            //    conn.Open();
+            //    int rows = cmd.ExecuteNonQuery();
+
+            //    if (rows > 0)
+            //    {
+            //        return true;
+            //    }
+            //}
+            var updateSql2 = $"update Users set UserName='{user.UserName}'," +
+                $"ContactNumber='{user.ContactNumber}'," +
+                $"Address='{user.Address}' where Id='{user.Id}'";
+            var cmd = dataAccess.GetCommand(updateSql2);
+            if (dataAccess.ExecuteNonQuery(cmd) > 0)
             {
-                cmd.CommandType = CommandType.Text;
-
-                cmd.Parameters.Add("@un", SqlDbType.NVarChar, 50).Value = user.UserName;
-                cmd.Parameters.Add("@cn", SqlDbType.NVarChar, 16).Value = user.ContactNumber;
-                cmd.Parameters.Add("@adr", SqlDbType.NVarChar, 255).Value = user.Address;
-                cmd.Parameters.Add("@Id", SqlDbType.Int).Value = user.Id;
-
-                conn.Open();
-                int rows = cmd.ExecuteNonQuery();
-
-                if (rows > 0)
-                {
-                    return true;
-                }
+                return true;
             }
-            //var updateSql2 = $"update Users set UserName='{user.UserName}'," +
-            //    $"ContactNumber='{user.ContactNumber}'," +
-            //    $"Address='{user.Address}' where Id='{user.Id}'";
-
             return false;
         }
         public bool IsUserValidForLogin(string username,string password)
