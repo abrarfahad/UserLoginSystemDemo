@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,19 +42,46 @@ namespace UserLoginSystem
         }
         public bool UpdateUser(User user)
         {
-            var updateSql = $"update Users set UserName='{user.UserName}'," +
-                $"ContactNumber='{user.ContactNumber}'," +
-                $"Address='{user.Address}' where Id='{user.Id}'";
-            if (dataAccess.ExecuteNonQuery(updateSql) > 0)
+            string cs = @"Server=DESKTOP-JM75471\SQLEXPRESS;Database=ScoolManagementSystemDb;Trusted_Connection=True;";
+
+            string sql = @"UPDATE [ScoolManagementSystemDb].[dbo].[Users]
+                   SET UserName = @un,
+                       ContactNumber = @cn,
+                       Address = @adr
+                   WHERE Id = @Id";
+
+            using (SqlConnection conn = new SqlConnection(cs))
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
             {
-                return true;
+                cmd.CommandType = CommandType.Text;
+
+                cmd.Parameters.Add("@un", SqlDbType.NVarChar, 50).Value = user.UserName;
+                cmd.Parameters.Add("@cn", SqlDbType.NVarChar, 16).Value = user.ContactNumber;
+                cmd.Parameters.Add("@adr", SqlDbType.NVarChar, 255).Value = user.Address;
+                cmd.Parameters.Add("@Id", SqlDbType.Int).Value = user.Id;
+
+                conn.Open();
+                int rows = cmd.ExecuteNonQuery();
+
+                if (rows > 0)
+                {
+                    return true;
+                }
             }
+            //var updateSql2 = $"update Users set UserName='{user.UserName}'," +
+            //    $"ContactNumber='{user.ContactNumber}'," +
+            //    $"Address='{user.Address}' where Id='{user.Id}'";
+
             return false;
         }
-        public bool IsUserValidForLogin(string userame,string password)
+        public bool IsUserValidForLogin(string username,string password)
         {
             DataTable dataTable;
-            dataTable = dataAccess.Execute($"Select * from Users where UserName='{userame.Trim()}' and Password='{password.Trim()}' ");
+            var sql = "select * from Users where UserName=@UN and Password = @PW";
+            var cmd = dataAccess.GetCommand(sql);
+            cmd.Parameters.AddWithValue("@UN", username);
+            cmd.Parameters.AddWithValue("@PW", password);
+            dataTable = dataAccess.Execute(cmd);
 
             if (dataTable.Rows.Count > 0) {
                 return true;

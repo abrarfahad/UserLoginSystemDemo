@@ -18,6 +18,18 @@ namespace UserLoginSystem
         {
             InitializeComponent();
             userRepo = new UserRepo();
+            fileToolStripMenuItem.DropDownItems.Add("Open");
+            fileToolStripMenuItem.DropDownItemClicked += FileToolStripMenuItem_DropDownItemClicked;
+        }
+
+        private void FileToolStripMenuItem_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            
+            MessageBox.Show("Meni Item clicked "+e.ClickedItem.Text);
+            if (e.ClickedItem.Text == "Exit")
+            {
+                Application.Exit();
+            }
         }
 
         private void UsersForm2_Load(object sender, EventArgs e)
@@ -33,7 +45,8 @@ namespace UserLoginSystem
         {
             var row = gvUsers.Rows[e.RowIndex];
             var userName = row.Cells["UserName"].Value.ToString();
-
+            var path = @"C:\Users\Mou\source\repos\UserLoginSystem\UserLoginSystem\images\";
+            pbUserPic.ImageLocation = $"{path}{UserId}.jpg";
             UserId = Int32.Parse(row.Cells["Id"].Value.ToString());
             txtUserNmae.Text = userName;
             txtContactNumber.Text = row.Cells["Contact"].Value.ToString();
@@ -60,6 +73,31 @@ namespace UserLoginSystem
             }
             updateUserGrid();
             MessageBox.Show("Update Success.");
+            
+        }
+
+        private void btnOpenFile_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                var pic = openFileDialog1.FileName;
+
+                pbUserPic.ImageLocation = pic;
+                Bitmap bitmap = new Bitmap(pic);
+                if (UserId >= 0)
+                {
+                    var path = @"C:\Users\Mou\source\repos\UserLoginSystem\UserLoginSystem\images\";
+                    bitmap.Save(path+UserId + ".jpg");
+                }
+                lblFileame.Text = pic;
+            }
+          
+            //pbUserPic.Image;
+        }
+
+        private void fileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem fileToolStripMenuItem = (ToolStripMenuItem)sender;
             
         }
     }
