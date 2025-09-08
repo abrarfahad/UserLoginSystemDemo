@@ -1,0 +1,66 @@
+﻿
+
+CREATE TABLE `users` (
+
+  `Id` int(11) NOT NULL,
+
+  `UserName` varchar(128) NOT NULL,
+
+  `UserType` int(11) NOT NULL,
+
+  `ContactNumber` varchar(16) NOT NULL,
+
+  `Address` varchar(256) NOT NULL,
+
+  `Password` varchar(128) NOT NULL
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+
+INSERT INTO `users` (`Id`, `UserName`, `UserType`, `ContactNumber`, `Address`, `Password`) VALUES
+
+(1, 'farhan', 1, '01700000102', 'Dahaka 1212', '1234');
+
+
+
+--
+
+-- Indexes for dumped tables
+
+--
+
+
+
+--
+
+-- Indexes for table `users`
+
+--
+
+ALTER TABLE `users`
+
+  ADD PRIMARY KEY (`Id`);
+
+
+
+--
+
+-- AUTO_INCREMENT for dumped tables
+
+--
+
+
+
+--
+
+-- AUTO_INCREMENT for table `users`
+
+--
+
+ALTER TABLE `users`
+
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+COMMIT;
+
