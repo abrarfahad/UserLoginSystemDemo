@@ -11,10 +11,10 @@ namespace UserLoginSystem
     public class UserRepo
     {
         List<User> Users;
-        MySqlDataAccess dataAccess;
+        DataAccess dataAccess;
         public UserRepo()
         {
-            dataAccess = new MySqlDataAccess();
+            dataAccess = new DataAccess();
             Users = new List<User>();
             PopulateUsers();
         }
@@ -36,8 +36,12 @@ namespace UserLoginSystem
         }
         public DataTable getAllUsers()
         {
-            var sql = $"Select Id,UserName,ContactNumber as Contact,Address from Users ";
+            var sql = $"Select Id,UserName,UserType,ContactNumber as Contact,Address from Users ";
             var datatable = dataAccess.Execute(sql);
+            foreach(var row in datatable.Rows)
+            {
+                
+            }
             return datatable;
         }
         public bool UpdateUser(User user)
