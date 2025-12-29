@@ -12,6 +12,7 @@ namespace UserLoginSystem
 {
     public partial class UsersForm2 : Form
     {
+        private const string IMAGE_PATH = @"C:\Users\Mou\source\repos\UserLoginSystem\UserLoginSystem\images\";
         UserRepo userRepo   ;
         int UserId = -1;
         public UsersForm2()
@@ -45,8 +46,7 @@ namespace UserLoginSystem
         {
             var row = gvUsers.Rows[e.RowIndex];
             var userName = row.Cells["UserName"].Value.ToString();
-            var path = @"C:\Users\Mou\source\repos\UserLoginSystem\UserLoginSystem\images\";
-            pbUserPic.ImageLocation = $"{path}{UserId}.jpg";
+            pbUserPic.ImageLocation = $"{IMAGE_PATH}{UserId}.jpg";
             UserId = Int32.Parse(row.Cells["Id"].Value.ToString());
             txtUserNmae.Text = userName;
             txtContactNumber.Text = row.Cells["Contact"].Value.ToString();
@@ -86,8 +86,7 @@ namespace UserLoginSystem
                 Bitmap bitmap = new Bitmap(pic);
                 if (UserId >= 0)
                 {
-                    var path = @"C:\Users\Mou\source\repos\UserLoginSystem\UserLoginSystem\images\";
-                    bitmap.Save(path+UserId + ".jpg");
+                    bitmap.Save(IMAGE_PATH+UserId + ".jpg");
                 }
                 lblFileame.Text = pic;
             }
