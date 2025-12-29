@@ -13,7 +13,7 @@ namespace UserLoginSystem
         where TConnection : DbConnection, new()
         where TCommand : DbCommand, new()
     {
-        protected static string _connectionString = string.Empty;
+        private string _connectionString = string.Empty;
 
         protected abstract string GetConnectionStringName();
 
